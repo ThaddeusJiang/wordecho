@@ -1,0 +1,10 @@
+node_modules/
+plugins/openai/dist/*
+!plugins/openai/dist/server.cjs
+!plugins/openai/dist/LICENSE
+!plugins/openai/dist/THIRD_PARTY_LICENSES.txt
+.DS_Store
+ACCEPTANCE.md
+.env
+.env.*
+!.env.example

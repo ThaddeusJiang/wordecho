@@ -1,0 +1,1 @@
+{"name":"wordecho","version":"0.1.1","description":"Listen to English words with clickable remote pronunciation.","skills":"./skills/","mcpServers":"./mcp.json","interface":{"displayName":"WordEcho","shortDescription":"Hear words. Remember more."}}

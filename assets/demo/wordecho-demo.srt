@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:02,475
+WordEcho - word, IPA and contextual meaning (browser preview)
+
+2
+00:00:02,476 --> 00:00:05,727
+Select US pronunciation - finance
+
+3
+00:00:05,728 --> 00:00:08,602
+Select UK pronunciation - finance
+
+4
+00:00:08,603 --> 00:00:11,596
+Select US pronunciation - ledger
+
+5
+00:00:11,597 --> 00:00:15,100
+Select UK pronunciation - ledger

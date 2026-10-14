@@ -1,0 +1,18 @@
+{
+  "name": "wordecho",
+  "version": "0.1.1",
+  "private": true,
+  "license": "MIT",
+  "author": "ThaddeusJiang",
+  "repository": { "type": "git", "url": "https://github.com/ThaddeusJiang/wordecho.git" },
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node plugins/openai/dist/server.cjs --http",
+    "test:core": "node --test tests/core.test.mjs",
+    "test:mcp": "node --test tests/mcp.test.mjs"
+  },
+  "dependencies": {"@modelcontextprotocol/sdk": "1.32.1", "zod": "4.6.7"},
+  "devDependencies": {"esbuild": "0.28.2"}
+}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WordEcho</title>
+<style>
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+* { box-sizing:border-box; }
+body { margin:0; padding:0; background:var(--color-background-primary, Canvas); color:var(--color-text-primary, CanvasText); font-size:14px; line-height:1.5; }
+.player { padding:24px; }
+header { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; margin-bottom:16px; font-size:12px; line-height:1.5; color:var(--color-text-secondary, GrayText); }
+.app-name { font-weight:500; } .description::before { content:'· '; }
+article { padding:16px 0; } article:first-child { padding-top:0; } article:last-child { padding-bottom:0; } article + article { border-top:1px solid color-mix(in srgb, currentColor 12%, transparent); }
+h2 { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:20px; line-height:1.4; margin:0 0 4px; } .word { overflow-wrap:anywhere; }
+.audio-link { font:400 13px/1.5 system-ui, sans-serif; color:var(--color-text-info, LinkText); padding:3px 1px; border:0; background:transparent; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.audio-link:hover { text-decoration-thickness:2px; } .audio-link:focus-visible { outline:2px solid currentColor; outline-offset:3px; border-radius:2px; }
+.ipa { font-size:14px; line-height:1.5; color:var(--color-text-secondary, GrayText); } .ipa:empty,.meaning:empty { display:none; } .meaning { margin-top:4px; line-height:1.5; overflow-wrap:anywhere; }
+.status:not([data-state="error"]) { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.status[data-state="error"] { font-size:13px; margin-top:8px; color:var(--color-text-danger, #b42318); }
+.source { font-size:11px; line-height:1.5; color:var(--color-text-secondary, GrayText); margin-top:16px; }
+@media (max-width:480px) { .player { padding:20px; } }
+</style></head>
+<body>
+<div class="player">
+<header><span class="app-name">WordEcho</span><span class="description">English pronunciation</span></header>
+<main id="words"></main><div id="status" class="status" role="status" aria-live="polite"></div>
+<div class="source">Audio · Youdao</div>
+</div>
+<script>/* WORDECHO_PLAYER */</script>
+</body></html>
