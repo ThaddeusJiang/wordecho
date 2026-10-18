@@ -6,9 +6,9 @@ Audio plays only after a click, from remote Youdao URLs. WordEcho does not use l
 
 ## Demo
 
-[![WordEcho demo: finance and ledger with IPA, Chinese meanings, and US/UK playback links](assets/demo/wordecho-demo.gif)](assets/demo/wordecho-demo.mp4)
+https://github.com/user-attachments/assets/1d80bd2e-c232-4dcf-aeeb-c71a1d5ba4ec
 
-[Watch or download the 15-second MP4 with sound](assets/demo/wordecho-demo.mp4). The GIF preview is silent.
+Play the 15-second demo above and unmute the player to hear US/UK pronunciation. [Download the MP4](assets/demo/wordecho-demo.mp4).
 
 This browser preview records the real player and US/UK clicks for **finance** and **ledger**, with IPA and Chinese meanings supplied through the tool. The MP4 uses pronunciation clips from the same Youdao URLs as the player, synchronized to the recorded clicks; it is not a live system-audio capture. Blue outlines highlight each selection, and an optional English subtitle track is included. It is not a recording of a Codex chat card. Third-party pronunciation audio is not covered by this repository's MIT license.
 
