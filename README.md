@@ -6,7 +6,17 @@ Audio plays only after a click, from remote audio URLs. Words use Youdao, with r
 
 ## Demo
 
-### Words and examples (0.1.2)
+### Chat interaction (0.1.2)
+
+https://github.com/user-attachments/assets/007e2f43-10b5-41f3-863f-9caf94b139c7
+
+[Play or download the chat demo](assets/demo/wordecho-chat-v0.1.2.mp4). Unmute to hear the narration and word/example audio. [Subtitles](assets/demo/wordecho-chat-v0.1.2.srt).
+
+The animation shows a user typing a question about **huddle**, sending it, receiving a WordEcho card, and selecting US and UK audio for the word and two examples. The word stays the visual focus; examples use smaller, plain text. Chinese narration uses Yunyang at 1.5 times the normal rate and stops during each pronunciation clip.
+
+This is an animated desktop chat scenario, not a recording of ChatGPT or a live tool call. The card uses the 0.1.2 player HTML and render code inside a constructed chat layout. Its pronunciation track reuses the six original remote media responses from the browser check below. The animation does not prove host integration. Prior demos are retained.
+
+### Browser playback check (0.1.2)
 
 https://github.com/user-attachments/assets/3b84df46-3a30-4586-bf9e-742bbae94346
 
