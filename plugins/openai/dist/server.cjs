@@ -1870,8 +1870,8 @@ var require_keyword = __commonJS({
       var _a3;
       const { gen, keyword, schema, parentSchema, $data, it } = cxt;
       checkAsyncKeyword(it, def);
-      const validate2 = !$data && def.compile ? def.compile.call(it.self, schema, parentSchema, it) : def.validate;
-      const validateRef = useKeyword(gen, keyword, validate2);
+      const validate3 = !$data && def.compile ? def.compile.call(it.self, schema, parentSchema, it) : def.validate;
+      const validateRef = useKeyword(gen, keyword, validate3);
       const valid = gen.let("valid");
       cxt.block$data(valid, validateKeyword);
       cxt.ok((_a3 = def.valid) !== null && _a3 !== void 0 ? _a3 : valid);
@@ -2944,28 +2944,28 @@ var require_compile = __commonJS({
         if (this.opts.code.process)
           sourceCode = this.opts.code.process(sourceCode, sch);
         const makeValidate = new Function(`${names_1.default.self}`, `${names_1.default.scope}`, sourceCode);
-        const validate2 = makeValidate(this, this.scope.get());
-        this.scope.value(validateName, { ref: validate2 });
-        validate2.errors = null;
-        validate2.schema = sch.schema;
-        validate2.schemaEnv = sch;
+        const validate3 = makeValidate(this, this.scope.get());
+        this.scope.value(validateName, { ref: validate3 });
+        validate3.errors = null;
+        validate3.schema = sch.schema;
+        validate3.schemaEnv = sch;
         if (sch.$async)
-          validate2.$async = true;
+          validate3.$async = true;
         if (this.opts.code.source === true) {
-          validate2.source = { validateName, validateCode, scopeValues: gen._values };
+          validate3.source = { validateName, validateCode, scopeValues: gen._values };
         }
         if (this.opts.unevaluated) {
           const { props, items } = schemaCxt;
-          validate2.evaluated = {
+          validate3.evaluated = {
             props: props instanceof codegen_1.Name ? void 0 : props,
             items: items instanceof codegen_1.Name ? void 0 : items,
             dynamicProps: props instanceof codegen_1.Name,
             dynamicItems: items instanceof codegen_1.Name
           };
-          if (validate2.source)
-            validate2.source.evaluated = (0, codegen_1.stringify)(validate2.evaluated);
+          if (validate3.source)
+            validate3.source.evaluated = (0, codegen_1.stringify)(validate3.evaluated);
         }
-        sch.validate = validate2;
+        sch.validate = validate3;
         return sch;
       } catch (e) {
         delete sch.validate;
@@ -6888,8 +6888,8 @@ var require_formats = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.formatNames = exports2.fastFormats = exports2.fullFormats = void 0;
-    function fmtDef(validate2, compare) {
-      return { validate: validate2, compare };
+    function fmtDef(validate3, compare) {
+      return { validate: validate3, compare };
     }
     exports2.fullFormats = {
       // date: http://tools.ietf.org/html/rfc3339#section-5.6
@@ -38826,36 +38826,59 @@ var StreamableHTTPServerTransport = class {
 var import_node_http3 = require("node:http");
 
 // packages/core/pronunciation.mjs
-function pronunciation({ word, ipa = "", meaning = "" }) {
-  word = typeof word === "string" ? word.trim() : "";
-  if (!word || word.length > 120 || !/^[A-Za-z][A-Za-z '\u2019-]*$/.test(word)) {
-    throw new Error("Enter an English word or short phrase (up to 120 characters).");
+function validate2(text) {
+  text = typeof text === "string" ? text.trim() : "";
+  if (!text || text.length > 120 || !/^[A-Za-z][A-Za-z0-9 '\u2019\u201c\u201d",.!?;:()\u2013\u2014-]*$/.test(text) || /:\/\/|[\r\n]/.test(text)) {
+    throw new Error("Enter English text of up to 120 characters.");
   }
+  return text;
+}
+function remoteSpeech(text) {
+  const url2 = (tl) => `https://translate.google.com/translate_tts?${new URLSearchParams({ ie: "UTF-8", q: text, tl, client: "tw-ob" })}`;
+  return { us: url2("en-US"), uk: url2("en-GB") };
+}
+function pronunciation({ word, ipa = "", meaning = "", examples = [] }) {
+  word = validate2(word);
+  const dictionary = /^[A-Za-z][A-Za-z'\u2019-]*$/.test(word);
   const url2 = (type) => `https://dict.youdao.com/dictvoice?${new URLSearchParams({ audio: word, type })}`;
-  return { word, ipa, meaning, audio: { uk: url2("1"), us: url2("2") }, source: "Youdao" };
+  return {
+    word,
+    ipa,
+    meaning,
+    audio: dictionary ? { us: url2("2"), uk: url2("1") } : remoteSpeech(word),
+    ...dictionary ? { fallbackAudio: remoteSpeech(word) } : {},
+    source: dictionary ? "Youdao" : "Google TTS",
+    examples: examples.map(({ text, meaning: meaning2 = "" }) => {
+      text = validate2(text);
+      return { text, meaning: meaning2, audio: remoteSpeech(text), source: "Google TTS" };
+    })
+  };
 }
 
 // wordecho:html
-var html_default = '<!doctype html>\n<html lang="en">\n<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n<title>WordEcho</title>\n<style>\n:root { color-scheme: light dark; font-family: system-ui, sans-serif; }\n* { box-sizing:border-box; }\nbody { margin:0; padding:0; background:var(--color-background-primary, Canvas); color:var(--color-text-primary, CanvasText); font-size:14px; line-height:1.5; }\n.player { padding:24px; }\nheader { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; margin-bottom:16px; font-size:12px; line-height:1.5; color:var(--color-text-secondary, GrayText); }\n.app-name { font-weight:500; } .description::before { content:\'\xB7 \'; }\narticle { padding:16px 0; } article:first-child { padding-top:0; } article:last-child { padding-bottom:0; } article + article { border-top:1px solid color-mix(in srgb, currentColor 12%, transparent); }\nh2 { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:20px; line-height:1.4; margin:0 0 4px; } .word { overflow-wrap:anywhere; }\n.audio-link { font:400 13px/1.5 system-ui, sans-serif; color:var(--color-text-info, LinkText); padding:3px 1px; border:0; background:transparent; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }\n.audio-link:hover { text-decoration-thickness:2px; } .audio-link:focus-visible { outline:2px solid currentColor; outline-offset:3px; border-radius:2px; }\n.ipa { font-size:14px; line-height:1.5; color:var(--color-text-secondary, GrayText); } .ipa:empty,.meaning:empty { display:none; } .meaning { margin-top:4px; line-height:1.5; overflow-wrap:anywhere; }\n.status:not([data-state="error"]) { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }\n.status[data-state="error"] { font-size:13px; margin-top:8px; color:var(--color-text-danger, #b42318); }\n.source { font-size:11px; line-height:1.5; color:var(--color-text-secondary, GrayText); margin-top:16px; }\n@media (max-width:480px) { .player { padding:20px; } }\n</style></head>\n<body>\n<div class="player">\n<header><span class="app-name">WordEcho</span><span class="description">English pronunciation</span></header>\n<main id="words"></main><div id="status" class="status" role="status" aria-live="polite"></div>\n<div class="source">Audio \xB7 Youdao</div>\n</div>\n<script>(()=>{var m=document.querySelector("#words"),w=document.querySelector("#status"),i=new Audio,s=0,h=1,l=new Map;function r(n,e="idle"){w.textContent=n,w.dataset.state=e}function y(n,e){let t=h++;return new Promise((c,a)=>{let d=setTimeout(()=>{l.delete(t),a(new Error("Host did not respond."))},1e4);l.set(t,{resolve:c,reject:a,timer:d}),window.parent.postMessage({jsonrpc:"2.0",id:t,method:n,params:e},"*")})}async function g(n,e){let t=++s;i.pause(),i=new Audio(n.audio[e]),i.addEventListener("ended",()=>{t===s&&r("Finished. Select US or UK to replay.")}),i.addEventListener("error",()=>{t===s&&r("Audio unavailable. Try the other pronunciation or retry.","error")}),r(`Loading ${n.word}\\u2026`,"loading");try{await i.play(),t===s&&r(`Playing ${n.word} \\xB7 ${e.toUpperCase()}`,"playing")}catch{t===s&&r("Could not play audio. Please retry or choose the other pronunciation.","error")}}function f(n){if(Array.isArray(n?.words)){s++,i.pause(),m.replaceChildren();for(let e of n.words){if(!["uk","us"].every(u=>{try{let o=new URL(e.audio?.[u]);return o.origin==="https://dict.youdao.com"&&o.pathname==="/dictvoice"}catch{return!1}}))continue;let t=document.createElement("article"),c=document.createElement("h2"),a=document.createElement("span");a.className="word",a.textContent=e.word,c.append(a);let d=document.createElement("div");d.className="ipa",d.textContent=e.ipa||"";let p=document.createElement("div");p.className="meaning",p.textContent=e.meaning||"";for(let u of["us","uk"]){let o=document.createElement("button");o.textContent=u.toUpperCase(),o.className="audio-link",o.type="button",o.setAttribute("aria-label",`Play ${e.word} ${u==="uk"?"British":"American"} pronunciation`),o.onclick=()=>g(e,u),c.append(o)}t.append(c,d,p),m.append(t)}r("Select US or UK to listen.")}}window.addEventListener("message",n=>{if(n.source!==window.parent)return;let e=n.data;if(e?.jsonrpc==="2.0"){if(l.has(e.id)){let t=l.get(e.id);clearTimeout(t.timer),l.delete(e.id),e.error?t.reject(new Error(e.error.message)):t.resolve(e.result)}e.method==="ui/notifications/tool-result"&&f(e.params?.structuredContent)}});if(window.parent!==window)y("ui/initialize",{appInfo:{name:"WordEcho",version:"0.1.1"},appCapabilities:{},protocolVersion:"2026-01-26"}).then(()=>{window.parent.postMessage({jsonrpc:"2.0",method:"ui/notifications/initialized"},"*")}).catch(n=>{r(n.message,"error")});else{let n=new URLSearchParams(location.search).get("word")||"Cambridge";fetch(`/api/words?word=${encodeURIComponent(n)}`).then(async e=>{let t=await e.json();if(!e.ok)throw new Error(t.error);f(t)}).catch(e=>{r(e.message,"error")})}})();\n</script>\n</body></html>\n';
+var html_default = '<!doctype html>\n<html lang="en">\n<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n<meta name="referrer" content="no-referrer">\n<title>WordEcho</title>\n<style>\n:root { color-scheme: light dark; font-family: system-ui, sans-serif; }\n* { box-sizing:border-box; }\nbody { margin:0; padding:0; background:var(--color-background-primary, Canvas); color:var(--color-text-primary, CanvasText); font-size:14px; line-height:1.5; }\n.player { padding:24px; }\nheader { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; margin-bottom:16px; font-size:12px; line-height:1.5; color:var(--color-text-secondary, GrayText); }\n.app-name { font-weight:500; } .description::before { content:\'\xB7 \'; }\narticle { padding:16px 0; } article:first-child { padding-top:0; } article:last-child { padding-bottom:0; } article + article { border-top:1px solid color-mix(in srgb, currentColor 12%, transparent); }\nh2 { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:20px; line-height:1.4; margin:0 0 4px; } .word { overflow-wrap:anywhere; }\n.audio-link { font:400 13px/1.5 system-ui, sans-serif; color:var(--color-text-info, LinkText); padding:3px 1px; border:0; background:transparent; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }\n.audio-link:hover { text-decoration-thickness:2px; } .audio-link:focus-visible { outline:2px solid currentColor; outline-offset:3px; border-radius:2px; }\n.ipa { font-size:14px; line-height:1.5; color:var(--color-text-secondary, GrayText); } .ipa:empty,.meaning:empty { display:none; } .meaning { margin-top:4px; line-height:1.5; overflow-wrap:anywhere; }\n.example { margin-top:10px; font-size:14px; font-weight:400; line-height:1.5; }\n.example .audio-link { margin-left:10px; } .example-meaning { font-size:13px; color:var(--color-text-secondary, GrayText); }\n.status:not([data-state="error"]) { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }\n.status[data-state="error"] { font-size:13px; margin-top:8px; color:var(--color-text-danger, #b42318); }\n.source { font-size:11px; line-height:1.5; color:var(--color-text-secondary, GrayText); margin-top:16px; }\n@media (max-width:480px) { .player { padding:20px; } }\n</style></head>\n<body>\n<div class="player">\n<header><span class="app-name">WordEcho</span><span class="description">English pronunciation</span></header>\n<main id="words"></main><div id="status" class="status" role="status" aria-live="polite"></div>\n<div class="source">Audio \xB7 Youdao / Google TTS</div>\n</div>\n<script>(()=>{var g=document.querySelector("#words"),h=document.querySelector("#status"),m=new Audio,l=0,C=1,p=new Map;function c(t,e="idle"){h.textContent=t,h.dataset.state=e}function U(t,e){let n=C++;return new Promise((o,a)=>{let r=setTimeout(()=>{p.delete(n),a(new Error("Host did not respond."))},1e4);p.set(n,{resolve:o,reject:a,timer:r}),window.parent.postMessage({jsonrpc:"2.0",id:n,method:t,params:e},"*")})}function f(t){try{let e=new URL(t);return e.origin==="https://dict.youdao.com"&&e.pathname==="/dictvoice"||e.origin==="https://translate.google.com"&&e.pathname==="/translate_tts"}catch{return!1}}async function S(t,e){let n=++l;m.pause();let o=t.word||t.text,a=[t.audio?.[e],t.fallbackAudio?.[e]].filter(f);for(let r=0;r<a.length;r++){if(n!==l)return;m=new Audio(a[r]);let i=m;c(`Loading ${o}\\u2026`,"loading"),i.addEventListener("ended",()=>{n===l&&c("Finished. Select US or UK to replay.")});let s;try{await Promise.race([i.play(),new Promise((d,u)=>{s=setTimeout(()=>u(new Error("Audio request timed out.")),15e3),i.addEventListener("error",()=>u(new Error("Audio source failed.")))})]),n===l&&(c(`Playing ${o} \\xB7 ${e.toUpperCase()}${r?" \\xB7 Google TTS":""}`,"playing"),i.addEventListener("error",()=>{n===l&&c("Audio stopped. Select US or UK to retry.","error")}));return}catch(d){if(i.pause(),n!==l)return;if(d.name==="NotAllowedError"){c("The host blocked audio playback. Select US or UK again to allow playback.","error");return}r===a.length-1&&c("Audio could not load. Check your connection, then select US or UK to retry.","error")}finally{clearTimeout(s)}}}function y(t,e){for(let n of["us","uk"]){let o=document.createElement("button");o.textContent=n.toUpperCase(),o.className="audio-link",o.type="button",o.setAttribute("aria-label",`Play ${t.word||t.text} ${n==="uk"?"British":"American"} pronunciation`),o.onclick=()=>S(t,n),e.append(o)}}function E(t){if(Array.isArray(t?.words)){l++,m.pause(),g.replaceChildren();for(let e of t.words){if(!["us","uk"].every(s=>f(e.audio?.[s])))continue;let n=document.createElement("article"),o=document.createElement("h2"),a=document.createElement("span");a.className="word",a.textContent=e.word,o.append(a);let r=document.createElement("div");r.className="ipa",r.textContent=e.ipa||"";let i=document.createElement("div");i.className="meaning",i.textContent=e.meaning||"",y(e,o),n.append(o,r,i);for(let s of(e.examples||[]).slice(0,3)){if(!["us","uk"].every(x=>f(s.audio?.[x])))continue;let d=document.createElement("div");d.className="example";let u=document.createElement("span");u.textContent=s.text,d.append(u),y(s,d);let w=document.createElement("div");w.className="example-meaning",w.textContent=s.meaning||"",d.append(w),n.append(d)}g.append(n)}c("Select US or UK to listen.")}}window.addEventListener("message",t=>{if(t.source!==window.parent)return;let e=t.data;if(e?.jsonrpc==="2.0"){if(p.has(e.id)){let n=p.get(e.id);clearTimeout(n.timer),p.delete(e.id),e.error?n.reject(new Error(e.error.message)):n.resolve(e.result)}e.method==="ui/notifications/tool-result"&&E(e.params?.structuredContent)}});if(window.parent!==window)U("ui/initialize",{appInfo:{name:"WordEcho",version:"0.1.2"},appCapabilities:{},protocolVersion:"2026-01-26"}).then(()=>{window.parent.postMessage({jsonrpc:"2.0",method:"ui/notifications/initialized"},"*")}).catch(t=>{c(t.message,"error")});else{let t=new URLSearchParams(location.search).get("word")||"Cambridge";fetch(`/api/words?word=${encodeURIComponent(t)}`).then(async e=>{let n=await e.json();if(!e.ok)throw new Error(n.error);E(n)}).catch(e=>{c(e.message,"error")})}})();\n</script>\n</body></html>\n';
 
 // plugins/openai/app/server.mjs
-var uri = "ui://wordecho/player-v0.1.1.html";
-var metadata = { ui: { prefersBorder: true, csp: { resourceDomains: ["https://dict.youdao.com"], connectDomains: [] } }, "openai/widgetCSP": { resource_domains: ["https://dict.youdao.com"], connect_domains: [] } };
+var uri = "ui://wordecho/player-v0.1.2.html";
+var metadata = { ui: { prefersBorder: true, csp: { resourceDomains: ["https://dict.youdao.com", "https://translate.google.com"], connectDomains: [] } }, "openai/widgetCSP": { resource_domains: ["https://dict.youdao.com", "https://translate.google.com"], connect_domains: [] } };
 function createServer2() {
-  const server = new McpServer({ name: "WordEcho", version: "0.1.1" });
+  const server = new McpServer({ name: "WordEcho", version: "0.1.2" });
   server.registerResource("wordecho-player", uri, { mimeType: "text/html;profile=mcp-app", _meta: metadata }, async () => ({ contents: [{ uri, mimeType: "text/html;profile=mcp-app", text: html_default, _meta: metadata }] }));
   server.registerTool("pronounce_words", {
     title: "Listen to English words",
-    description: "Show compact WordEcho cards with inline US then UK remote pronunciation links. Pass optional IPA and contextual meaning when known; the tool does not verify them. Does not play automatically.",
-    inputSchema: { words: external_exports.array(external_exports.object({ word: external_exports.string().min(1).max(120), ipa: external_exports.string().max(200).optional(), meaning: external_exports.string().max(500).optional() })).min(1).max(20) },
+    description: "Show compact WordEcho cards with inline US then UK remote pronunciation links. Pass optional IPA and contextual meaning when known; the tool does not verify them. Include up to three short programmer or technical-document examples per word in examples, each with text and optional Chinese meaning. Complete sentences are supported. Does not play automatically.",
+    inputSchema: { words: external_exports.array(external_exports.object({ word: external_exports.string().min(1).max(120), ipa: external_exports.string().max(200).optional(), meaning: external_exports.string().max(500).optional(), examples: external_exports.array(external_exports.object({ text: external_exports.string().min(1).max(120), meaning: external_exports.string().max(500).optional() })).max(3).optional() })).min(1).max(20) },
     annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     _meta: { ui: { resourceUri: uri }, "openai/outputTemplate": uri, "openai/widgetAccessible": true }
   }, async ({ words }) => {
     try {
       const result = { words: words.map(pronunciation) };
       return { structuredContent: result, content: [{ type: "text", text: result.words.map((w) => `${w.word} ${w.ipa} ${w.meaning}
-UK: ${w.audio.uk}
-US: ${w.audio.us}`).join("\n\n") }] };
+US: ${w.audio.us}
+UK: ${w.audio.uk}${w.examples.map((e) => `
+${e.text} ${e.meaning}
+US: ${e.audio.us}
+UK: ${e.audio.uk}`).join("")}`).join("\n\n") }] };
     } catch (error62) {
       return { isError: true, content: [{ type: "text", text: error62.message }] };
     }
@@ -38874,7 +38897,7 @@ async function main() {
     }
     if (req.method === "GET" && url2.pathname === "/health") {
       res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify({ name: "WordEcho", version: "0.1.1" }));
+      return res.end(JSON.stringify({ name: "WordEcho", version: "0.1.2" }));
     }
     if (req.method === "GET" && url2.pathname === "/api/words") {
       try {

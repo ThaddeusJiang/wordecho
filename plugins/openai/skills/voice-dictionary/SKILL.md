@@ -7,4 +7,6 @@ Use the WordEcho `pronounce_words` tool for requested words. Include IPA and the
 
 Show the interactive player so the user can click to listen and replay without leaving the conversation. Do not run macOS say or browser speech synthesis. Do not autoplay. If the host does not render MCP Apps, explain the limitation accurately rather than presenting an emoji or URL as a functional inline playback button.
 
-Keep teaching concise: split unfamiliar words into small useful chunks, distinguish mnemonic hooks from real roots, and add a short programmer-context example when helpful. Respect the user's unfamiliar-word review priorities and do not mark a word mastered solely because it was displayed.
+Keep teaching concise: split unfamiliar words into small useful chunks, distinguish mnemonic hooks from real roots, and include one or two short examples from programmer or technical-document contexts in the tool examples field, with Chinese meanings. Keep the word as the visual focus. Use plain, smaller text for examples, without bold type. Make each complete example available for US and UK playback. Respect the user's unfamiliar-word review priorities and do not mark a word mastered solely because it was displayed.
+
+Words use Youdao dictionary audio with remote Google TTS as a fallback. Phrases and examples use remote Google TTS. Do not claim that a URL or a tool response proves playback.

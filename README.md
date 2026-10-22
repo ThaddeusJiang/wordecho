@@ -2,9 +2,21 @@
 
 Hear English words without leaving your conversation. WordEcho displays compact cards with a word, IPA, contextual meaning, and inline **US** then **UK** pronunciation links.
 
-Audio plays only after a click, from remote Youdao URLs. WordEcho does not use local text-to-speech or browser speech synthesis. Clicking another pronunciation interrupts the current audio.
+Audio plays only after a click, from remote audio URLs. Words use Youdao, with remote Google TTS as a fallback. Phrases and complete examples use remote Google TTS. WordEcho does not use local text-to-speech or browser speech synthesis. Examples use smaller, plain text below the word and have their own US/UK links. Clicking another pronunciation interrupts the current audio.
 
 ## Demo
+
+### Words and examples (0.1.2)
+
+[Play or download the new demo](assets/demo/wordecho-examples-v0.1.2.mp4). Unmute the player to hear all six selections. [Optional subtitles](assets/demo/wordecho-examples-v0.1.2.srt).
+
+The demo shows **huddle**, its IPA and Chinese meaning, and two complete examples. Each has US then UK playback links. The word stays the visual focus; examples use smaller, plain text.
+
+This is a real browser preview of the 0.1.2 player, with six clicks that each reached the end of playback. The audio track uses the exact six media response bodies returned to that browser: two Youdao word clips and four Google TTS example clips. They are added at the recorded playback event times. This is not a live system-audio capture or a Codex chat recording. Blue outlines and bottom labels mark the selections; the preview is enlarged by 1.4 times for recording. There is no voice-over.
+
+The user confirmed acceptance on October 22, 2026. Build checks, automated tests, browser playback, and user acceptance are separate checks. This PR does not prove playback in every host or long-term audio service availability.
+
+### Earlier word demo
 
 https://github.com/user-attachments/assets/1d80bd2e-c232-4dcf-aeeb-c71a1d5ba4ec
 
@@ -140,9 +152,9 @@ The old marketplace was called `wordecho-local`. Existing installations are not 
 
 ## Audio, privacy, and limitations
 
-- Clicking a pronunciation sends the selected word to Youdao, along with normal network request information such as your IP address. Do not use sensitive text as pronunciation input.
-- The source uses `https://dict.youdao.com/dictvoice`: `type=2` for US and `type=1` for UK. Availability, accuracy, and coverage are not guaranteed. Playback errors are shown; synthesized audio is never substituted.
-- The plugin bundle contains no audio recordings; it retrieves remote audio after a click. The demo MP4 includes four short Youdao pronunciation clips. Third-party audio, services, trademarks, and dependencies have their own terms and licenses; this repository's MIT license does not cover them.
+- Clicking a pronunciation sends the selected text to Youdao or Google, along with normal network request information such as your IP address. Do not use sensitive text as pronunciation input.
+- The source uses `https://dict.youdao.com/dictvoice`: `type=2` for US and `type=1` for UK. Availability, accuracy, and coverage are not guaranteed. Playback errors are shown; word playback can fall back to remote Google TTS. Phrases and examples use Google TTS (`translate.google.com/translate_tts`). These third-party endpoints can change or fail.
+- The plugin bundle contains no audio recordings; it retrieves remote audio after a click. The earlier demo includes four Youdao word clips; the 0.1.2 demo includes two Youdao word clips and four Google TTS example clips. Third-party audio, services, trademarks, and dependencies have their own terms and licenses; this repository's MIT license does not cover them.
 - WordEcho is not affiliated with Youdao or OpenAI. Formal permission for commercial use of Youdao's endpoint has not been established. Check the provider's current terms or obtain permission before offering a public or commercial service based on it.
 - A build or MCP response does not prove every host can render or play inline cards.
 
