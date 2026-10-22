@@ -2,6 +2,8 @@
 
 Hear English words without leaving your conversation. WordEcho displays compact cards with a word, IPA, contextual meaning, and inline **US** then **UK** pronunciation links.
 
+See [GitHub Releases](https://github.com/ThaddeusJiang/wordecho/releases) for published versions and the [changelog](ChangeLog.md) for their changes.
+
 Audio plays only after a click, from remote audio URLs. Words use Youdao, with remote Google TTS as a fallback. Phrases and complete examples use remote Google TTS. WordEcho does not use local text-to-speech or browser speech synthesis. Examples use smaller, plain text below the word and have their own US/UK links. Clicking another pronunciation interrupts the current audio.
 
 ## Demo
