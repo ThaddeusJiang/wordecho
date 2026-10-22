@@ -1,0 +1,23 @@
+1
+00:00:01,601 --> 00:00:03,020
+US: huddle
+
+2
+00:00:03,744 --> 00:00:05,005
+UK: huddle
+
+3
+00:00:05,754 --> 00:00:08,396
+US: Start a huddle before deployment.
+
+4
+00:00:09,182 --> 00:00:11,959
+UK: Start a huddle before deployment.
+
+5
+00:00:12,663 --> 00:00:15,500
+US: We can discuss the outage in the thread.
+
+6
+00:00:16,275 --> 00:00:19,106
+UK: We can discuss the outage in the thread.

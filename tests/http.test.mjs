@@ -9,9 +9,9 @@ test('HTTP adapter supports MCP initialization, card lookup and UI resources', a
     await client.connect(new StreamableHTTPClientTransport(new URL('http://127.0.0.1:43187/mcp')));
     const result = await client.callTool({ name:'pronounce_words', arguments:{ words:[{ word:'ledger' }] } });
     assert.equal(result.structuredContent.words[0].word, 'ledger');
-    assert.equal((await client.readResource({ uri:'ui://wordecho/player-v0.1.1.html' })).contents[0].mimeType, 'text/html;profile=mcp-app');
+    assert.equal((await client.readResource({ uri:'ui://wordecho/player-v0.1.2.html' })).contents[0].mimeType, 'text/html;profile=mcp-app');
     const invalid = await fetch('http://127.0.0.1:43187/api/words?word=https://example.com');
     assert.equal(invalid.status, 400);
-    assert.match((await invalid.json()).error, /English word/);
+    assert.match((await invalid.json()).error, /English text/);
   } finally { await client.close(); }
 });

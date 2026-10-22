@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "wordecho", "version": "0.1.1",
+  "name": "wordecho", "version": "0.1.2",
   "description": "Listen to English words inside your conversation with inline US/UK pronunciation links.",
   "author": {"name":"ThaddeusJiang"},
   "extensions": {"com.openai":{"interface":{"displayName":"WordEcho","shortDescription":"Hear words. Remember more.","developerName":"ThaddeusJiang","category":"Productivity","capabilities":["Interactive"],"defaultPrompt":"Help me learn this word and show its pronunciation player."}}}
