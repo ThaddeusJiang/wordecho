@@ -8,13 +8,15 @@ Audio plays only after a click, from remote audio URLs. Words use Youdao, with r
 
 ### Words and examples (0.1.2)
 
+https://github.com/user-attachments/assets/3b84df46-3a30-4586-bf9e-742bbae94346
+
 [Play or download the new demo](assets/demo/wordecho-examples-v0.1.2.mp4). Unmute the player to hear all six selections. [Optional subtitles](assets/demo/wordecho-examples-v0.1.2.srt).
 
 The demo shows **huddle**, its IPA and Chinese meaning, and two complete examples. Each has US then UK playback links. The word stays the visual focus; examples use smaller, plain text.
 
 This is a real browser preview of the 0.1.2 player, with six clicks that each reached the end of playback. The audio track uses the exact six media response bodies returned to that browser: two Youdao word clips and four Google TTS example clips. They are added at the recorded playback event times. This is not a live system-audio capture or a Codex chat recording. Blue outlines and bottom labels mark the selections; the preview is enlarged by 1.4 times for recording. There is no voice-over.
 
-The user confirmed acceptance on October 22, 2026. Build checks, automated tests, browser playback, and user acceptance are separate checks. This PR does not prove playback in every host or long-term audio service availability.
+The user confirmed acceptance on October 22, 2026. Build checks, automated tests, browser playback, and user acceptance are separate checks. These checks do not prove playback in every host or long-term audio service availability.
 
 ### Earlier word demo
 
